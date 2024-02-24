@@ -2,6 +2,7 @@
 #__init__
 from ctypes import *
 from basic import *
+from keyboard import *
 from dice import *
 import os
 import time
@@ -47,11 +48,11 @@ time.sleep(10)
 """
 die = Dice()
 MAP = [
-    Key('roll', die.roll(), 'r'),
-    Key('blow', die.blow(), 'b')
+    Keyboard.Key('roll', die.roll(), 'r'),
+    Keyboard.Key('blow', die.blow(), 'b')
 ]
 num = 0
 while True: #wheres the keyboard input?
-    lab = [Label("number", str(num))]
+    lab = [BasicLabel("number", str(num))]
     s = Screen(keys=MAP, labels=lab)
     print(s.formatter.create())# needs keyboard input for a mock testing

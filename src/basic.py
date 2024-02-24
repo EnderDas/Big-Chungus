@@ -5,32 +5,47 @@ basic formatter
 +------------------------------------------+
 |                   <NAME>                 |
 |                                          |
+|               [LABEL] <VALUE>            |
 |                [KEY] <ITEM>              |
-|                [KEY] <ITEM>              |
-|                [KEY] <ITEM>              |
+|               [LABEL] <VALUE>            |
 |                [KEY] <ITEM>              |
 |                                          |
 +------------------------------------------+
 """
 
 _FORMAT_STR = """
-{lowbar}
-{spaceings_one}
+{highbar}
+{spacings_one}
 {title}
 {labels}
 {keys}
-{spaceings_two}
+{spacings_two}
 {lowbar}
 """
 
-class Key:
+class BasicKey:
+
+    """
+    Renamed to remove confusion with Keyboard.Key
+
+    Move self.function & self.calling into Keyboard.Key handle them there
+    to save space and make it make sense.
+
+    Keyboard.Key should inherent this class to use it as a base class and remove
+    unnecessary names from Keyboard.Key
+    """
+
 
     def __init__(self, name, function, calling):
         self.name = name
-        self.function = function
-        self.calling = calling
+        self.function = function #this should be changed to match up with key
+        self.calling = calling #this can probably be handled in key also
 
-class Label:
+class BasicLabel:
+
+    """
+    Renamed to follow suite to BasicKey's rename
+    """
     
     def __init__(self, name, desc):
         self.name = name
@@ -74,8 +89,8 @@ class Basic:
             _labels = _labels+l
 
         #formatting spacings
-        _spaceings_one = ''
-        _spaceings_two = ''
+        _spacings_one = ''
+        _spacings_two = ''
 
         range_ = (
             self.screen.height - (
@@ -85,23 +100,25 @@ class Basic:
         
         #print(self.screen.height-(5+len(self.keys)))
         #print(range_)
-        for i in range(self.screen.height-(5+len(self.keys+self.labels))):
-            space = ' '*self.screen.width
+        for i in range(
+            self.screen.height - (5 + len(self.keys + self.labels))):
+
+            space = ' ' * self.screen.width
             space = list(space)
-            space[0] = '|'; space[len(space)-1:] = '|'
+            space[0] = '|'; space[len(space) - 1:] = '|'
             space = ''.join(space)
             if i < range_:
-                _spaceings_one = _spaceings_one+space
+                _spacings_one = _spacings_one + space
             else:
-                _spaceings_two = _spaceings_two+space
+                _spacings_two = _spacings_two + space
 
         format = _FORMAT_STR.format(
-            highbar=_bars, 
-            spaceings_one=_spaceings_one, 
-            title=_title, 
-            keys=_keys, 
-            labels=_labels, 
-            spaceings_two=_spaceings_two, 
-            lowbar=_bars
+            highbar = _bars, 
+            spacings_one = _spacings_one, 
+            title = _title, 
+            keys = _keys, 
+            labels = _labels, 
+            spacings_two = _spacings_two, 
+            lowbar = _bars
             )
         return format
