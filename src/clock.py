@@ -39,4 +39,33 @@ class Loop:
             else:
                 pass
 
+class Event:
 
+    def __init__(self, func, name, loop):
+        self.func = func
+        self.name = name
+        self.loop = loop
+
+class EventLoop(Loop):
+
+
+    def __init__(self):
+        super().__init__()
+
+    def event(self, func, priority=False):
+
+        event = Event(func, func.__name__, self)
+
+        def addEvent(event, priority):
+            self.addWork(event)
+            if priority:
+                self.priorityPrint(event)
+        return addEvent(event, priority)
+
+loop = EventLoop()
+
+@loop.event
+def work():
+    pass
+
+print(loop.work[0].name)
