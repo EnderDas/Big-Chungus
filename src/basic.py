@@ -17,6 +17,7 @@ _FORMAT_STR = """
 {lowbar}
 {spaceings_one}
 {title}
+{labels}
 {keys}
 {spaceings_two}
 {lowbar}
@@ -29,11 +30,18 @@ class Key:
         self.function = function
         self.calling = calling
 
+class Label:
+    
+    def __init__(self, name, desc):
+        self.name = name
+        self.desc = desc
+
 class Basic:
 
     def __init__(self, **kwargs):
         self.title = kwargs.get('title', 'TITLE')
         self.keys = kwargs.get('keys', [])
+        self.labels = kwargs.get('labels', [])
         self.screen = kwargs.get('screen', None)
 
     def create(self):
@@ -56,13 +64,28 @@ class Basic:
             k = ''.join(k)
             _keys = _keys+k
 
+        _labels = ''
+        for label in self.labels:
+            l = f'[{label.desc.upper()}] {label.name.title()}'
+            l = l.center(self.screen.width, ' ')
+            l = list(l)
+            l[0] = '|'; l[len(l)-1:] = '|'
+            l = ''.join(l)
+            _labels = _labels+l
+
         #formatting spacings
         _spaceings_one = ''
         _spaceings_two = ''
-        range_ = (self.screen.height-(5+len(self.keys)))//2
-        print(self.screen.height-(5+len(self.keys)))
-        print(range_)
-        for i in range(self.screen.height-(5+len(self.keys))):
+
+        range_ = (
+            self.screen.height - (
+                5 + len( self.keys+self.labels )
+                    )
+                ) // 2
+        
+        #print(self.screen.height-(5+len(self.keys)))
+        #print(range_)
+        for i in range(self.screen.height-(5+len(self.keys+self.labels))):
             space = ' '*self.screen.width
             space = list(space)
             space[0] = '|'; space[len(space)-1:] = '|'
@@ -72,5 +95,13 @@ class Basic:
             else:
                 _spaceings_two = _spaceings_two+space
 
-        format = _FORMAT_STR.format(highbar=_bars, spaceings_one=_spaceings_one, title=_title, keys=_keys, spaceings_two=_spaceings_two, lowbar=_bars)
+        format = _FORMAT_STR.format(
+            highbar=_bars, 
+            spaceings_one=_spaceings_one, 
+            title=_title, 
+            keys=_keys, 
+            labels=_labels, 
+            spaceings_two=_spaceings_two, 
+            lowbar=_bars
+            )
         return format

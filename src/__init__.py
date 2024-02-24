@@ -2,6 +2,7 @@
 #__init__
 from ctypes import *
 from basic import *
+from dice import *
 import os
 import time
 
@@ -30,6 +31,11 @@ class Screen:
         windll.kernel32.SetConsoleCursorPosition(h, _COORD(0, 0))
 
 
+
+
+
+
+"""
 _keys = [
     Key('kek', None, 'k'),
     Key('lmao', None, 'l')
@@ -38,3 +44,14 @@ _keys = [
 s = Screen(keys=_keys)
 print(s.formatter.create())
 time.sleep(10)
+"""
+die = Dice()
+MAP = [
+    Key('roll', die.roll(), 'r'),
+    Key('blow', die.blow(), 'b')
+]
+num = 0
+while True: #wheres the keyboard input?
+    lab = [Label("number", str(num))]
+    s = Screen(keys=MAP, labels=lab)
+    print(s.formatter.create())# needs keyboard input for a mock testing
