@@ -31,11 +31,6 @@ class Screen:
         h = windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
         windll.kernel32.SetConsoleCursorPosition(h, _COORD(0, 0))
 
-
-
-
-
-
 """
 _keys = [
     Key('kek', None, 'k'),
@@ -48,11 +43,12 @@ time.sleep(10)
 """
 die = Dice()
 MAP = [
-    Keyboard.Key('roll', die.roll(), 'r'),
-    Keyboard.Key('blow', die.blow(), 'b')
+    Keyboard.Key('roll', str(die.roll()), 'r'),
+    Keyboard.Key('blow', str(die.blow()), 'b')
 ]
 num = 0
-while True: #wheres the keyboard input?
-    lab = [BasicLabel("number", str(num))]
-    s = Screen(keys=MAP, labels=lab)
-    print(s.formatter.create())# needs keyboard input for a mock testing
+#while True: #wheres the keyboard input?
+lab = [BasicLabel("number", str(num))]
+s = Screen(keys=MAP, labels=lab)
+print(s.formatter.create())# needs keyboard input for a mock testing
+

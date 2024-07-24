@@ -1,5 +1,10 @@
 #basic
-
+"""
+change formatting to something easier to read, maybe even a system that just
+handles the boarders separately and something that handles the labels and keys
+all by itself too. im gonna hold off on the keyboard for now and focus on cleaning this up so
+i have an actual system to work off of that can handle events and shi...
+"""
 """
 basic formatter
 +------------------------------------------+
@@ -13,6 +18,44 @@ basic formatter
 +------------------------------------------+
 """
 
+"""
+'Frame' based formatter
+{0}{1}{2}
+{3}{4}{5}
+{6}{7}{8}
+
+frames will ideally just be a cool way to abstract the way i can set up windowing with the cli
+
+class Frame:
+
+    def __init__(self, screen, cells=[]):
+        if cells != []:
+            self.cells = cells
+        else:
+            self.cells = [None for i in range(9)]
+        self.screen = screen
+
+    def cell(self, index):
+        if index > 9 and index <= 0:
+            return self.cells[index]
+        else:
+            raise ValueError('Must be less than 9 or more than 0')
+
+    def loadCell(self, cell, index):
+        if compare(cell, Cell) and (index > 9 && index <=0):
+            self.cells[index] = cell
+        else:
+            raise ValueError("SET UP YOUR CELL LOADS CORRECTLY DUNCE")
+
+    def packCells(self):
+        for c in self.cells:
+            if c == None:
+                raise ValueError("LOAD YOUR GOD DAMN CELLS BUNGHOLE")
+            else:
+                
+"""
+
+
 _FORMAT_STR = """
 {highbar}
 {spacings_one}
@@ -22,6 +65,10 @@ _FORMAT_STR = """
 {spacings_two}
 {lowbar}
 """
+
+class Boarder:
+
+    pass
 
 class BasicKey:
 
@@ -61,7 +108,8 @@ class Basic:
 
     def create(self):
         #formatting high/low bars
-        _bars = '+'+((self.screen.width)-2)*'-'+'+'
+        #_bars = '+'+((self.screen.width)-2)*'-'+'+'
+        _bars = "+"+f"{'-'*(self.screen.width-2)}"+"+"
 
         #formatting title
         _title = self.title.upper().center(self.screen.width, ' ')
@@ -70,15 +118,41 @@ class Basic:
         _title = ''.join(_title)
 
         #formatting keys
-        _keys = ''
-        for key in self.keys:
-            k = f'[{key.calling.upper()}] {key.name.title()}'
-            k = k.center(self.screen.width, ' ')
-            k = list(k)
-            k[0] = '|'; k[len(k)-1:] = '|'
-            k = ''.join(k)
+        _keys = '' #get the key
+        for key in self.keys: #look through them
+            k = f'[{key.calling.upper()}] {key.name.title()}' #make the key with style
+            #k = k.center(self.screen.width, ' ') #center the key
+            #k = list(k) #convert to list of chars
+            #k[0] = '|'; k[len(k)-1:] = '|' #some centering magic i figured out, this could be better but idc
+            #k = ''.join(k) #pull it all back together again
+            """
+
+                this could be done using f-string padding,
+                this might speed up the formatting process but at what speed?
+                trivial given the whole formatter is an absolute fucking mess
+                idk what im doing but it works so...
+
+            k = f"|{k^(self.screen.width-2)}|"
+
+                this might work... or it might not... i have no clue i dont want to test it yet
+
+                that did not work...
+                this did however tho.
+
+            k = f'|{k:^{self.screen.width-2}}|'
+                     ^
+                     |--- this right here
+
+            this worked because i finally realized how to format a string correctly
+
+
+            """
+            #k = f'|{value:{align}{width}}|'
+            k = f'|{k:^{self.screen.width-2}}|'
             _keys = _keys+k
 
+
+        #pull this shit apart and make it make sense
         _labels = ''
         for label in self.labels:
             l = f'[{label.desc.upper()}] {label.name.title()}'

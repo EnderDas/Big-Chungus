@@ -1,5 +1,4 @@
 import msvcrt
-from clock import *
 from basic import *
 
 class Keyboard:
@@ -10,16 +9,19 @@ class Keyboard:
             return True
         else:
             return False
+        
+    def __init__(self):
+        self.keys = []
+        self.sticky = False
 
     class Key(BasicKey):
 
-        def __init__(self, char, name, number):
+        def __init__(self, name, number, char):
             super().__init__(name, self, char)
             self.char = char
             self.name = name
             self.number = number
 
-        
 
 """
 class Keyboard:
