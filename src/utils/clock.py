@@ -1,4 +1,4 @@
-from .keyboard import *
+from console import *
 
 class Clock:
 
@@ -69,7 +69,7 @@ class EventLoop(Loop):
                 self.priorityPrint(event)
         return addEvent(event, priority)
     
-class EventKeyboard(Keyboard):
+class EventKeyboard(keyboard.Keyboard):
 
     def __init__(self, loop=None):
         super().__init__()

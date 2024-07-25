@@ -66,6 +66,7 @@ class Frame:
 """
 
 
+
 _FORMAT_STR = """
 {highbar}
 {spacings_one}
