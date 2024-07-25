@@ -52,7 +52,17 @@ class Frame:
             if c == None:
                 raise ValueError("LOAD YOUR GOD DAMN CELLS BUNGHOLE")
             else:
-                
+                pass
+        #cells checked begin pack the cells into the form now
+        form = f\"""
+              {self.cells[0]}{self.cells[1]}{self.cells[2]}
+              {self.cells[3]}{self.cells[4]}{self.cells[5]}
+              {self.cells[6]}{self.cells[7]}{self.cells[8]}
+               \"""
+       return packedCells
+
+       #this fucking sucks change it, find something better
+       #there has to be a better way of doing this...
 """
 
 
@@ -99,6 +109,8 @@ class BasicLabel:
         self.desc = desc
 
 class Basic:
+
+    #clean up notes and remove unneeded code.
 
     def __init__(self, **kwargs):
         self.title = kwargs.get('title', 'TITLE')

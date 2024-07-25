@@ -22,6 +22,8 @@ _FORMATTERS = {
 
 class Screen:
 
+    #put all of this into its own file, flesh out the class with more functional... methods..
+    #add docs and rendering methods
     def __init__(self, format="basic", **kwargs):
         self.format = format
         self.width, self.height = os.get_terminal_size()
