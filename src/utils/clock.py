@@ -33,7 +33,7 @@ class Loop:
     def addWork(self, work):
         self.work.append(work)
 
-    def prioityPrint(self, work):
+    def priorityPrint(self, work):
         self.doWork(work)
 
     def stopWork(self):
