@@ -1,3 +1,5 @@
+from console import *
+
 class Clock:
 
     def __init__(self):
@@ -19,14 +21,19 @@ class Loop:
         self.stopwork = False
     
     def doWork(self, work=None):
-        if not work:
-            pass #do all the work
+        if work != None:
+            for i in self.work:
+                if i == work:
+                    i.func()
+        else:
+            for i in self.work:
+                i.func()
         self.iteration += 1
 
     def addWork(self, work):
         self.work.append(work)
 
-    def prioityPrint(self, work):
+    def priorityPrint(self, work):
         self.doWork(work)
 
     def stopWork(self):
@@ -61,11 +68,25 @@ class EventLoop(Loop):
             if priority:
                 self.priorityPrint(event)
         return addEvent(event, priority)
+    
+class EventKeyboard(keyboard.Keyboard):
+
+    def __init__(self, loop=None):
+        super().__init__()
+        if loop == None:
+            Exception("ADD A DAMN LOOP TO THE KEYBOARD DOLT")
+        else:
+            self.loop = loop
+        
 
 loop = EventLoop()
 
 @loop.event
 def work():
-    pass
+    print("butthole")
 
-print(loop.work[0].name)
+loop.doWork(work)
+
+#lmao no idea what im actually gonna do with any of this
+#might be wishful thinking to act like any of this complexity is necessary
+#for a game so simple
