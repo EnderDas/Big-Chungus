@@ -1,6 +1,6 @@
 TODO.md
 .vscode
 .pyc
-src/__pycache__
+__pycache__
 _themage_demo_ref.py
 readdocsrefs
